@@ -5,16 +5,17 @@ import Actionbutton from "../ActionButton/Actionbutton"
 import "./App.css"
 import Cardlist from "../CardList/Cardlist"
 
-class App extends React.Component{
-  render(){
+const App =()=>{
+  
+   
     return(
       <>
         <Navbar/>
         <main className="container">
           <div className="action_button">
 
-            <Actionbutton isActive={true} text="New"/>
-            <Actionbutton isActive={false} text="Past"/>
+            <Actionbutton isActive={true} text="New" />
+            <Actionbutton isActive={false} text="Past" />
           </div>
           <Cardlist/>
           <Cardlist/>
@@ -24,6 +25,6 @@ class App extends React.Component{
         <Footer/>
       </>
     )
-  }
+  
 }
 export default App

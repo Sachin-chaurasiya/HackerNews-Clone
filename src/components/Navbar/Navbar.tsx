@@ -33,6 +33,10 @@ const Navbar = (props:any) => {
       <NavLink to="/top" >
         <Actionbutton isActive={currentTab(props.history,"/top")} text="Past" />
         </NavLink>
+
+      <NavLink to="/best" >
+        <Actionbutton isActive={currentTab(props.history,"/best")} text="Best" />
+        </NavLink>
     </div>
     </div>
     </>

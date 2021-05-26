@@ -1,10 +1,12 @@
 import "./Card.css"
 import {BsClock} from "react-icons/bs"
-const Card = (props:{header:string,description:string,detail:{time:any,comments:string}}) => {
+
+const Card = (props:{header:string,description:string,detail:{time:any,comments:string},url:string}) => {
   return (
-    <div className="card">
+   <a href={props.url} style={{textDecoration:"none",color:"var(--gray-ft)"}} rel="noopener noreferrer" target="_blank">
+    <div className="card" >
       <div className="card_body">
-        <h2 className="card_header">{props.header}</h2>
+        <h3 className="card_header">{props.header}</h3>
         <p className="card_description">{props.description}</p>
       </div>
       <div className="card_footer">
@@ -12,6 +14,8 @@ const Card = (props:{header:string,description:string,detail:{time:any,comments:
       </div>
       
     </div>
+    </a>
+    
   )
 }
 

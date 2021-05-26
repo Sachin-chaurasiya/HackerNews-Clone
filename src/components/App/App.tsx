@@ -2,7 +2,7 @@ import React,{useEffect,useState} from "react"
 
 import "./App.css"
 import Cardlist from "../CardList/Cardlist"
-import {getNewsByType} from "../API/Methods"
+import {getNewsByType} from "../../API/Methods"
 import Error from "../Error/Error";
 import NewsSkelaton from "../Skelatons/NewsSkelaton";
 

@@ -1,28 +1,42 @@
-import React from "react"
-import Footer from "../Footer/Footer"
-import Navbar from "../Navbar/Navbar"
-import Actionbutton from "../ActionButton/Actionbutton"
+import React,{useEffect,useState} from "react"
+
 import "./App.css"
 import Cardlist from "../CardList/Cardlist"
+import Loader from "../Loader/Loader";
+import {getNewsByType} from "../API/Methods"
+import Error from "../Error/Error";
+const App =(props:{match:any})=>{
+  const type:string=props.match.params.type;
+  const [news,setNews]=useState([])
+  const [error,setError]=useState("")
+  const[isLoading,setIsloading]=useState(false)
 
-const App =()=>{
-  
-   
+  useEffect(() => {
+    setIsloading(true)
+    getNewsByType(type)
+    .then((res:any)=>{
+      setNews(res)
+      setIsloading(false)
+      setError("")
+    })
+    .catch((err:any)=>{
+      setIsloading(false)
+      setError(err)
+    })
+
+  }, [type])
+
     return(
       <>
-        <Navbar/>
-        <main className="container">
-          <div className="action_button">
-
-            <Actionbutton isActive={true} text="New" />
-            <Actionbutton isActive={false} text="Past" />
-          </div>
-          <Cardlist/>
-          <Cardlist/>
-          <Cardlist/>
-          <button className="button">Load more</button>
-        </main>
-        <Footer/>
+          {isLoading && <Loader/>}
+          {!isLoading && 
+            <main className="container">
+              <Cardlist news={news}/>
+              {news.length>0 && <button className="button">Load more</button>}
+            </main> 
+        }
+        {error && <Error message={error}/>} 
+        
       </>
     )
   

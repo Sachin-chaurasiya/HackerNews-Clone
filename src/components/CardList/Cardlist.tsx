@@ -2,12 +2,13 @@
 import Card from "../Card/Card"
 
 import "./Cardlist.css"
-const Cardlist = () => {
+const Cardlist = (props:{news:any}) => {
+  const {news} =props
   return (
     <div className="card_list">
-            <Card header="lorem lipsum lorem lipsum lorem lipsum" description="lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum " detail={{time:" 4 min",comments:"50 comments"}}/>
-            <Card header="lorem lipsum lorem lipsum lorem lipsum" description="lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum " detail={{time:` 1 min`,comments:"35 comments"}}/>
-            <Card header="lorem lipsum lorem lipsum lorem lipsum" description="lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum " detail={{time:" 3 min",comments:"5 comments"}}/>
+          {news.map((single:any)=> <Card key={single.data.id} header={single?.data?.title} description={single?.data?.text?single.data.text: "lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum"} detail={{time:` 
+          ${new Date(single.data.time).getMinutes()} Min`,comments:`${single.data.kids && single.data.kids.length > 0 ? single.data.kids.length : 0} comments`}}/>)}
+                   
     </div>
   )
 }

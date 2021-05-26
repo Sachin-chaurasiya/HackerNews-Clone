@@ -6,9 +6,15 @@
   gap: 0.8rem;
   flex: 0.33;
   box-shadow: 5px 5px 15px #888888;
+  cursor: pointer;
 }
 .card_body{
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+}
+.card_description{
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }

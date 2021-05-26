@@ -14,12 +14,12 @@ const Cardlist = (props:{news:object[]}):JSX.Element => {
   return (
     <div className="card_list">
           {news.slice(0,visible).map((single:any)=> 
-            <Card key={single.data.id} header={single?.data?.title} description={single?.data?.text?single.data.text: "lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum"} detail={{time:` 
-            ${new Date(single.data.time).getMinutes()} Min`,comments:`${single.data.kids && single.data.kids.length > 0 ? single.data.kids.length : 0} comments`}} url={single.data.url}/>
+            <Card key={single?.data?.id} header={single?.data?.title} description={single?.data?.text?single.data.text: "lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum"} detail={{time:` 
+            ${new Date(single?.data?.time).getMinutes()} Min`,comments:`${single?.data?.kids && single.data.kids.length > 0 ? single.data.kids.length : 0} comments`}} url={single?.data?.url}/>
                  
           )
           }
-          {news.length>0 && <button className="button" onClick={loadHandler} style={{display:`${visible===500?"none":"block"}`}}>Load more</button>}
+          {news.length>0 && <button className="button" onClick={loadHandler} style={{display:`${visible>=500?"none":"block"}`}}>Load more</button>}
           
     </div>
   )

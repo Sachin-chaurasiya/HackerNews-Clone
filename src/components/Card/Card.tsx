@@ -2,7 +2,7 @@ import React from "react"
 import "./Card.css"
 import {BsClock} from "react-icons/bs"
 type card={
-  header:string,description:string,detail:{time:any,comments:string},url:string
+  header:string,description:string,detail:{time:string,comments:string},url:string
 }
 const Card:React.FC<card> = (props:card):JSX.Element => {
   return (

@@ -7,6 +7,7 @@ import {
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import App from "./App/App";
+import ScrollToTop from "./ScrollToTop/ScrollToTop";
 
 const Routes = () => {
   return (
@@ -18,6 +19,7 @@ const Routes = () => {
           <Route path="/:type" component={App} />
         </Switch>
       </Router>
+      <ScrollToTop />
       <Footer />
     </>
   );

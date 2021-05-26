@@ -4,8 +4,6 @@ import Card from "../Card/Card"
 import "./Cardlist.css"
 const Cardlist = (props:{news:any}) => {
   const [visible,setVisible]=useState(5);
-  console.log(visible);
-  
   const loadHandler=()=>{
     setVisible(prevState=>prevState+5)
   }

@@ -1,5 +1,4 @@
 import React ,{useState} from "react"
-
 import Card from "../Card/Card"
 import "./Cardlist.css"
 const Cardlist = (props:{news:any}) => {

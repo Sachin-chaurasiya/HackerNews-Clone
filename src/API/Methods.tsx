@@ -1,23 +1,24 @@
+
 import axios from "axios"
 import {BASE_URL} from "./Constant"
 
 const getNews=async (id:number)=>{
   try {
-    const single = await axios.get(`${BASE_URL}/item/${id}.json`);
+    const single = await axios.get<{}>(`${BASE_URL}/item/${id}.json`);
     return single
     
-  } catch (error) {
-    return error
+  } catch (error:any) {
+    return Promise.reject("No data Found for given id")
   }
 }
 
 const getNewsByType=async (type:string)=>{
   try {
-    const { data: newsIds} = await axios.get(`${BASE_URL}/${type}stories.json`);
-    const news = await Promise.all(newsIds.slice(0,60).map(getNews));
+    const { data } = await axios.get<[]>(`${BASE_URL}/${type}stories.json`);
+    const news = await Promise.all(data.map(getNews));
     return news
     
-  } catch (error) {
+  } catch (error:any) {
     return Promise.reject("No data Found")
   }
 }

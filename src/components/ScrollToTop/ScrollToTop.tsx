@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {AiOutlineArrowUp} from "react-icons/ai"
 import "./ScrollToTop.css"
-const ScrollToTop=()=> {
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => {
+
+const ScrollToTop=():JSX.Element=> {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const toggleVisibility:EventListener = () => {
     if (window.pageYOffset > 468) {
       setIsVisible(true);
     } else {
@@ -11,7 +13,7 @@ const ScrollToTop=()=> {
     }
   };
 
-  const scrollToTop = () => {
+  const scrollToTop:React.MouseEventHandler = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth"

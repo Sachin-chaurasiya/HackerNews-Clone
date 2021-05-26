@@ -2,7 +2,7 @@ import React from 'react'
 import Shimmer from './Shimmer'
 import Skeleton from './Skelatons'
 
-const NewsSkelaton = () => {
+const NewsSkelaton:Function = ():JSX.Element => {
   const themeClass = 'light'
 
   return (

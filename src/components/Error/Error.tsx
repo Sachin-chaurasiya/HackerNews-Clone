@@ -1,5 +1,6 @@
  import {NavLink} from "react-router-dom"
-const Error = (props:{message?:string}) => {
+
+const Error = (props:{message?:string}):JSX.Element => {
   return (
     <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
       <h3>

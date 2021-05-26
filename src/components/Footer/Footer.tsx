@@ -1,6 +1,6 @@
 import "./Footer.css"
 
-const Footer = () => {
+const Footer:Function = ():JSX.Element => {
   return (
     <footer className="footer">
       <h2 className="footer_text">HackerNews.</h2>

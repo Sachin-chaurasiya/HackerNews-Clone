@@ -1,7 +1,10 @@
+import React from "react"
 import "./Card.css"
 import {BsClock} from "react-icons/bs"
-
-const Card = (props:{header:string,description:string,detail:{time:any,comments:string},url:string}) => {
+type card={
+  header:string,description:string,detail:{time:any,comments:string},url:string
+}
+const Card:React.FC<card> = (props:card):JSX.Element => {
   return (
    <a href={props.url} style={{textDecoration:"none",color:"var(--gray-ft)"}} rel="noopener noreferrer" target="_blank">
     <div className="card" >

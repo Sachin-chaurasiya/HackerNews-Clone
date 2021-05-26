@@ -6,21 +6,24 @@ import {getNewsByType} from "../../API/Methods"
 import Error from "../Error/Error";
 import NewsSkelaton from "../Skelatons/NewsSkelaton";
 
-const App =(props:{match:any})=>{
+type match={
+  match:{params:{type:string}}
+}
+const App:React.FC<match> =(props:match):JSX.Element=>{
   const type:string=props.match.params.type;
-  const [news,setNews]=useState([])
-  const [error,setError]=useState("")
-  const[isLoading,setIsloading]=useState(false)
+  const [news,setNews]=useState<object[]>([])
+  const [error,setError]=useState<string>("")
+  const[isLoading,setIsloading]=useState<boolean>(false)
 
   useEffect(() => {
     setIsloading(true)
     getNewsByType(type)
-    .then((res:any)=>{
+    .then((res:object[])=>{
       setNews(res)
       setIsloading(false)
       setError("")
     })
-    .catch((err:any)=>{
+    .catch((err:string)=>{
       setIsloading(false)
       setError(err)
     })

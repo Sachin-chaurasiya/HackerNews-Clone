@@ -1,5 +1,5 @@
 import "./Loader.css"
-const Loader = () => {
+const Loader:Function = ():JSX.Element => {
   return (
     <div className="loader"></div>
   )

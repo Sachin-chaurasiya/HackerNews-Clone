@@ -1,8 +1,13 @@
-
+import React from "react"
 import "./Actionbutton.css"
-const Actionbutton = (props:{isActive:boolean,text:string,clickHandler?:any}) => {
+
+type button={
+  isActive:boolean,
+  text:string
+}
+const Actionbutton:React.FC<button> = (props:button):JSX.Element => {
   return (
-    <button className={`btn ${props.isActive?"active":""}`} onClick={props.clickHandler}>
+    <button className={`btn ${props.isActive?"active":""}`}>
       {props.text}
     </button>
   )

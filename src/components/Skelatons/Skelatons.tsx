@@ -1,7 +1,11 @@
-
+import React from "react"
 import './Skelaton.css';
 
-const Skeleton:Function=(props:{ type:string }):JSX.Element =>{
+type skeletonProps={
+  type:string
+}
+
+const Skeleton:React.FC<skeletonProps>=(props) =>{
   const classes = `skeleton ${props.type} `;
 
   return (

@@ -2,6 +2,7 @@
 
 :root{
   --primary:#FBC91b;
+  --primary-light:#ceb24f;
   --grey:#f2f2f2;
   --black-ft:rgba(0,0,0,0.82);
   --grey-ft:rgba(0,0,0,0.50);
@@ -41,6 +42,11 @@ body{
   cursor: pointer;
   padding: 0.8rem 1rem;
   margin: 1.5rem auto;
+}
+.button:disabled{
+  cursor: not-allowed;
+  background-color: var(--primary-light);
+
 }
 
 @media screen and (max-width:1024px){

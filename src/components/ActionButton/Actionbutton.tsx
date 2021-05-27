@@ -5,7 +5,7 @@ type button={
   isActive:boolean,
   text:string
 }
-const Actionbutton:React.FC<button> = (props:button):JSX.Element => {
+const Actionbutton:React.FC<button> = (props) => {
   return (
     <button className={`btn ${props.isActive?"active":""}`}>
       {props.text}

@@ -1,5 +1,6 @@
+import { ReactNode } from "react";
 
-const Shimmer:Function = ():JSX.Element => {
+const Shimmer:React.FC<ReactNode> = () => {
   return (
     <div className="shimmer-wrapper">
       <div className="shimmer"></div>

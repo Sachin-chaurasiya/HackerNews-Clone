@@ -1,25 +1,34 @@
-import React ,{useState} from "react"
+import React from "react"
+import {v4 as uuidv4} from "uuid"
 import Card from "../Card/Card"
 import "./Cardlist.css"
 
-const Cardlist = (props:{news:object[]}):JSX.Element => {
+type singleNews={
+  id?:number,
+  title?:string,
+  text?:string,
+  time?:string|number|Date|any,
+  kids?:number[],
+  url?:string
+}
+type news={
+  news:{}[]
+}
 
-  const [visible,setVisible]=useState<number>(5);
 
-  const loadHandler:React.MouseEventHandler=()=>{
-    setVisible(prevState=>prevState+5)
-  }
+const Cardlist:React.FC<news> = (props) => {
+
+  
   const {news} =props
   
   return (
     <div className="card_list">
-          {news.slice(0,visible).map((single:any)=> 
-            <Card key={single?.data?.id} header={single?.data?.title} description={single?.data?.text?single.data.text: "lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum"} detail={{time:` 
-            ${new Date(single?.data?.time).getMinutes()} Min`,comments:`${single?.data?.kids && single.data.kids.length > 0 ? single.data.kids.length : 0} comments`}} url={single?.data?.url}/>
+          {news.map((value:singleNews)=> 
+            <Card key={uuidv4()} header={value?.title} description={value?.text?value.text: "lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum"} detail={{time:` ${new Date(value?.time).getMinutes().toLocaleString()} Min`,comments:`${value?.kids && value.kids.length > 0 ? value.kids.length : 0} comments`}} url={value?.url}/>
                  
           )
           }
-          {news.length>0 && <button className="button" onClick={loadHandler} style={{display:`${visible>=500?"none":"block"}`}}>Load more</button>}
+          
           
     </div>
   )

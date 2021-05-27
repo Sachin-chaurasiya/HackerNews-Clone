@@ -7,14 +7,18 @@ import {
 
 import Actionbutton from "../ActionButton/Actionbutton"
 
-const currentTab = (history:any, path:string):boolean => {
+const currentTab:Function = (history:any, path:string):boolean => {
   if (history.location.pathname === path) {
     return true;
   } else {
     return false;
   }
 };
-const Navbar = (props:{history:object}):JSX.Element => {
+
+type navbar={
+  history:{}
+}
+const Navbar:React.FC<navbar> = (props) => {
   return (
     <>
 

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import Shimmer from './Shimmer'
 import Skeleton from './Skelatons'
 
-const NewsSkelaton:Function = ():JSX.Element => {
+const NewsSkelaton:React.FC<ReactNode> = ()=> {
   const themeClass = 'light'
 
   return (

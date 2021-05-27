@@ -5,17 +5,17 @@ import {BASE_URL} from "./Constant"
 const getNews=async (id:number)=>{
   try {
     const single = await axios.get<{}>(`${BASE_URL}/item/${id}.json`);
-    return single
+    return single.data
     
   } catch (error:any) {
     return Promise.reject("No data Found for given id")
   }
 }
 
-const getNewsByType=async (type:string)=>{
+const getNewsByType=async (type:string,start?:number,end?:number)=>{
   try {
     const { data } = await axios.get<[]>(`${BASE_URL}/${type}stories.json`);
-    const news = await Promise.all(data.map(getNews));
+    const news = await Promise.all(data.slice(start,end).map(getNews));
     return news
     
   } catch (error:any) {

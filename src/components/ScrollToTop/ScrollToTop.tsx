@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {AiOutlineArrowUp} from "react-icons/ai"
 import "./ScrollToTop.css"
 
-const ScrollToTop=():JSX.Element=> {
+const ScrollToTop:Function=():JSX.Element=> {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleVisibility:EventListener = () => {

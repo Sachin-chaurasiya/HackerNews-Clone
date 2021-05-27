@@ -7,19 +7,35 @@ import Error from "../Error/Error";
 import NewsSkelaton from "../Skelatons/NewsSkelaton";
 
 type match={
-  match:{params:{type:string}}
+  match:{
+    params:{
+      type:string
+    }
+  }
 }
-const App:React.FC<match> =(props:match):JSX.Element=>{
+const App:React.FC<match> =(props)=>{
   const type:string=props.match.params.type;
   const [news,setNews]=useState<object[]>([])
   const [error,setError]=useState<string>("")
   const[isLoading,setIsloading]=useState<boolean>(false)
+  
+  // visible
+  const [visible,setVisible]=useState<number>(5);
+  // start
+  const [start,setStart]=useState<number>(0)
 
+  // load more handler
+  const loadHandler:React.MouseEventHandler=()=>{
+    setStart(prevState=>prevState+5)
+    setVisible(prevState=>prevState+5)
+  }
+  
+  
   useEffect(() => {
     setIsloading(true)
-    getNewsByType(type)
+    getNewsByType(type,start,visible)
     .then((res:object[])=>{
-      setNews(res)
+      setNews(prevState=>[...prevState,...res])
       setIsloading(false)
       setError("")
     })
@@ -28,8 +44,8 @@ const App:React.FC<match> =(props:match):JSX.Element=>{
       setError(err)
     })
 
-  }, [type])
-
+  }, [type,visible,start])
+  
     return(
       <>
       
@@ -41,6 +57,11 @@ const App:React.FC<match> =(props:match):JSX.Element=>{
         }
         {error && <Error message={error}/>} 
         
+        {news.length>0 &&
+        <div className="container">
+         <button className="button" disabled={isLoading?true:false} onClick={loadHandler} style={{display:`${visible>=500?"none":"block"}`}}>Load more</button>
+        </div>
+         }
       </>
     )
   

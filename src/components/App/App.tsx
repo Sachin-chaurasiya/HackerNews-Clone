@@ -18,24 +18,23 @@ const App:React.FC<match> =(props)=>{
   const [news,setNews]=useState<object[]>([])
   const [error,setError]=useState<string>("")
   const[isLoading,setIsloading]=useState<boolean>(false)
+  console.log(type);
   
   // visible
   const [visible,setVisible]=useState<number>(5);
-  // start
-  const [start,setStart]=useState<number>(0)
+ 
 
   // load more handler
   const loadHandler:React.MouseEventHandler=()=>{
-    setStart(prevState=>prevState+5)
     setVisible(prevState=>prevState+5)
   }
   
   
   useEffect(() => {
     setIsloading(true)
-    getNewsByType(type,start,visible)
+    getNewsByType(type,visible)
     .then((res:object[])=>{
-      setNews(prevState=>[...prevState,...res])
+      setNews(res)
       setIsloading(false)
       setError("")
     })
@@ -43,8 +42,9 @@ const App:React.FC<match> =(props)=>{
       setIsloading(false)
       setError(err)
     })
+    
 
-  }, [type,visible,start])
+  }, [type,visible])
   
     return(
       <>

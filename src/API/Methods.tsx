@@ -12,10 +12,10 @@ const getNews=async (id:number)=>{
   }
 }
 
-const getNewsByType=async (type:string,start?:number,end?:number)=>{
+const getNewsByType=async (type:string,end?:number)=>{
   try {
     const { data } = await axios.get<[]>(`${BASE_URL}/${type}stories.json`);
-    const news = await Promise.all(data.slice(start,end).map(getNews));
+    const news = await Promise.all(data.slice(0,end).map(getNews));
     return news
     
   } catch (error:any) {

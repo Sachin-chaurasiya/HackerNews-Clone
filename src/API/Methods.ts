@@ -20,7 +20,7 @@ const getNewsByType=async (type:string,end?:number):Promise<{}[]>=>{
     return news
     
   } catch (error:any) {
-    return Promise.reject("No data Found")
+    return Promise.reject("No data Found for given type")
   }
 }
 

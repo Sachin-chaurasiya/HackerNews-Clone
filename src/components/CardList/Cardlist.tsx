@@ -24,7 +24,7 @@ const Cardlist:React.FC<news> = (props) => {
   return (
     <div className="card_list">
           {news && news.map((value:singleNews)=> 
-            <Card key={uuidv4()} header={value?.title} description={value?.text?value.text: "lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum lorem lipsum"} detail={{time:` ${new Date(value?.time).getMinutes().toLocaleString()} Min`,comments:`${value?.kids && value.kids.length > 0 ? value.kids.length : 0} comments`}} url={value?.url}/>
+            <Card key={uuidv4()} header={value.title?value.title:"--"} description={value.text?value.text: "--"} detail={{time:` ${new Date(value.time).getMinutes().toLocaleString()} Min`,comments:`${value.kids && value.kids.length > 0 ? value.kids.length : 0} comments`}} url={value.url}/>
                  
           )
           }

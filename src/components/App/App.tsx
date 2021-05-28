@@ -18,12 +18,10 @@ const App:React.FC<match> =(props)=>{
   const [news,setNews]=useState<object[]>([])
   const [error,setError]=useState<string>("")
   const[isLoading,setIsloading]=useState<boolean>(false)
-  console.log(type);
   
   // visible
   const [visible,setVisible]=useState<number>(5);
  
-
   // load more handler
   const loadHandler:React.MouseEventHandler=()=>{
     setVisible(prevState=>prevState+5)

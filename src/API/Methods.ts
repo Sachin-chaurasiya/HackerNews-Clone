@@ -2,7 +2,8 @@
 import axios from "axios"
 import {BASE_URL} from "./Constant"
 
-const getNews=async (id:number)=>{
+
+const getNews=async (id:number):Promise<{}>=>{
   try {
     const single = await axios.get<{}>(`${BASE_URL}/item/${id}.json`);
     return single.data
@@ -12,7 +13,7 @@ const getNews=async (id:number)=>{
   }
 }
 
-const getNewsByType=async (type:string,end?:number)=>{
+const getNewsByType=async (type:string,end?:number):Promise<{}[]>=>{
   try {
     const { data } = await axios.get<[]>(`${BASE_URL}/${type}stories.json`);
     const news = await Promise.all(data.slice(0,end).map(getNews));

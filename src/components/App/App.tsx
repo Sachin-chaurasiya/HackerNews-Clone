@@ -1,63 +1,66 @@
-import React,{useEffect,useState} from "react"
-
+import React,{useEffect,useReducer} from "react"
 import "./App.css"
 import Cardlist from "../CardList/Cardlist"
 import {getNewsByType} from "../../API/Methods"
 import Error from "../Error/Error";
 import NewsSkelaton from "../Skelatons/NewsSkelaton";
+import {match,AppState,actionType} from "./AppUtils"
+import {reducer} from "./Reducer"
 
-type match={
-  match:{
-    params:{
-      type:string
-    }
-  }
-}
+
+const initialState:AppState = {
+  news: [],
+  error:"",
+  isloading:false,
+  postVisible:5,
+
+};
+
+
+
 const App:React.FC<match> =(props)=>{
   const type:string=props.match.params.type;
-  const [news,setNews]=useState<object[]>([])
-  const [error,setError]=useState<string>("")
-  const[isLoading,setIsloading]=useState<boolean>(false)
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {postVisible,isloading,news,error}=state
   
-  // visible
-  const [visible,setVisible]=useState<number>(5);
- 
   // load more handler
   const loadHandler:React.MouseEventHandler=()=>{
-    setVisible(prevState=>prevState+5)
+    dispatch({type:actionType.SETVISIBLE})
   }
   
   
   useEffect(() => {
-    setIsloading(true)
-    getNewsByType(type,visible)
+    dispatch({type:actionType.SETLOADING})
+
+    getNewsByType(type,postVisible)
     .then((res:object[])=>{
-      setNews(res)
-      setIsloading(false)
-      setError("")
+      dispatch({type:actionType.SETNEWS,payload:res})
+      dispatch({type:actionType.RESETLOADING})
+      dispatch({type:actionType.RESETERROR})
+      
     })
     .catch((err:string)=>{
-      setIsloading(false)
-      setError(err)
+      dispatch({type:actionType.RESETLOADING})
+      dispatch({type:actionType.SETERROR})
     })
     
 
-  }, [type,visible])
+  }, [type,postVisible])
   
     return(
       <>
       
-        {isLoading && [1,2,3,4,5].map((n) => <NewsSkelaton key={n} />)}
-          {!isLoading && 
+        {isloading && [1,2,3,4,5].map((n) => <NewsSkelaton key={n} />)}
+          {!isloading && 
             <main className="container">
               <Cardlist news={news}/>
             </main> 
         }
         {error && <Error message={error}/>} 
         
-        {news.length>0 &&
+        {news && news.length>0 &&
         <div className="container">
-         <button className="button" disabled={isLoading?true:false} onClick={loadHandler} style={{display:`${visible>=500?"none":"block"}`}}>Load more</button>
+         <button className="button" disabled={isloading?true:false} onClick={loadHandler} style={{display:`${postVisible && postVisible>=500?"none":"block"}`}}>Load more</button>
         </div>
          }
       </>

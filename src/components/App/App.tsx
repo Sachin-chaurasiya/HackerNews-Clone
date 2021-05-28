@@ -1,68 +1,53 @@
 import React,{useEffect,useReducer} from "react"
 import "./App.css"
 import Cardlist from "../CardList/Cardlist"
-import {getNewsByType} from "../../API/Methods"
+import {getStoryByType} from "../../API/Methods"
 import Error from "../Error/Error";
-import NewsSkelaton from "../Skelatons/NewsSkelaton";
-import {match,AppState,actionType} from "./AppUtils"
+import Skeleton from "../Skelatons/SkeletonComponent"
+import {match,AppState,actionType,news} from "./AppUtils"
 import {reducer} from "./Reducer"
-
+import Loadmore from "../LoadMore/LoadMore"
 
 const initialState:AppState = {
-  news: [],
+  stories: [],
   error:"",
   isloading:false,
   postVisible:5,
 
 };
 
-
-
 const App:React.FC<match> =(props)=>{
-  const type:string=props.match.params.type;
+  const storyType:string=props.match.params.storytype;
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {postVisible,isloading,news,error}=state
-  
-  // load more handler
   const loadHandler:React.MouseEventHandler=()=>{
-    dispatch({type:actionType.SETVISIBLE})
+    dispatch({type:actionType.SET_VISIBLE})
   }
-  
+  const {postVisible,isloading,stories,error}=state
   
   useEffect(() => {
-    dispatch({type:actionType.SETLOADING})
+    dispatch({type:actionType.SET_LOADING})
 
-    getNewsByType(type,postVisible)
-    .then((res:object[])=>{
-      dispatch({type:actionType.SETNEWS,payload:res})
-      dispatch({type:actionType.RESETLOADING})
-      dispatch({type:actionType.RESETERROR})
+    getStoryByType(storyType,postVisible)
+    .then((res:news[])=>{
+      dispatch({type:actionType.SET_NEWS,payload:res})
+      dispatch({type:actionType.RESET_LOADING})
+      dispatch({type:actionType.RESET_ERROR})
       
     })
-    .catch((err:string)=>{
-      dispatch({type:actionType.RESETLOADING})
-      dispatch({type:actionType.SETERROR})
+    .catch(()=>{
+      dispatch({type:actionType.RESET_LOADING})
+      dispatch({type:actionType.SET_ERROR})
     })
     
 
-  }, [type,postVisible])
+  }, [storyType,postVisible])
   
     return(
       <>
-      
-        {isloading && [1,2,3,4,5].map((n) => <NewsSkelaton key={n} />)}
-          {!isloading && 
-            <main className="container">
-              <Cardlist news={news}/>
-            </main> 
-        }
-        {error && <Error message={error}/>} 
-        
-        {news && news.length>0 &&
-        <div className="container">
-         <button className="button" disabled={isloading?true:false} onClick={loadHandler} style={{display:`${postVisible && postVisible>=500?"none":"block"}`}}>Load more</button>
-        </div>
-         }
+        <Skeleton isloading={isloading}/>
+        <Cardlist stories={stories} isloading={isloading}/> 
+        <Error message={error}/>
+        <Loadmore isloading={isloading} callback={loadHandler} postVisible={postVisible} stories={stories} />
       </>
     )
   

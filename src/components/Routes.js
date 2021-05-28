@@ -16,11 +16,11 @@ const Routes = () => {
         <Navbar />
         <Switch>
           <Route path="/" render={() => <Redirect to="/new" />} exact={true} />
-          <Route path="/:type" component={App} />
+          <Route path="/:storytype" component={App} />
         </Switch>
+        <ScrollToTop />
+        <Footer />
       </Router>
-      <ScrollToTop />
-      <Footer />
     </>
   );
 };

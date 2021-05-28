@@ -1,29 +1,19 @@
 import React from "react"
 import "./Card.css"
 import {BsClock} from "react-icons/bs"
+import {news} from "../App/AppUtils"
 
-type card={
-  header:string|undefined,
-  description:string,
-  detail:{
-    time:string|number|Date|any,
-    comments:string
-  },
-    url:string|undefined
-}
-
-const Card:React.FC<card> = (props) => {
+const Card:React.FC<news> = ({title,text,url,time,kids}) => {
   return (
-   <a href={props.url} style={{textDecoration:"none",color:"var(--gray-ft)"}} rel="noopener noreferrer" target="_blank">
+   <a href={url} style={{textDecoration:"none",color:"var(--gray-ft)"}} rel="noopener noreferrer" target="_blank">
     <div className="card" >
       <div className="card_body">
-        <h3 className="card_header">{props.header}</h3>
-        <p className="card_description">{props.description}</p>
+        <h3 className="card_header">{title?title:"---"}</h3>
+        <p className="card_description">{text?text:"---"}</p>
       </div>
       <div className="card_footer">
-        <p className="card_footer__detail"><BsClock style={{verticalAlign:"middle",fontSize:"1.2rem"}}/>{props.detail.time} | {props.detail.comments}</p>
+        <p className="card_footer__detail"><BsClock style={{verticalAlign:"middle",fontSize:"1.2rem"}}/>{` ${new Date(time).getMinutes().toLocaleString()} Min`} | {`${kids && kids.length > 0 ? kids.length : 0} comments` }</p>
       </div>
-      
     </div>
     </a>
     

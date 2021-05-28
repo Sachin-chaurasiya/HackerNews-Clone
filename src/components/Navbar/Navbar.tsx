@@ -6,8 +6,15 @@ import {
 } from "react-router-dom";
 
 import Actionbutton from "../ActionButton/Actionbutton"
+import React from "react";
 
-const currentTab:Function = (history:any, path:string):boolean => {
+type history={
+    location:{
+      pathname:string
+  }
+}
+
+const currentTab:Function = (history:history, path:string):boolean => {
   if (history.location.pathname === path) {
     return true;
   } else {
@@ -15,13 +22,10 @@ const currentTab:Function = (history:any, path:string):boolean => {
   }
 };
 
-type navbar={
-  history:{}
-}
-const Navbar:React.FC<navbar> = (props) => {
+
+const Navbar:React.FC<history> = (props):React.ReactElement => {
   return (
     <>
-
     <nav className="navbar">
       <h2 className="brand">
         <span className="brand_span">Hacker</span>News
@@ -31,15 +35,15 @@ const Navbar:React.FC<navbar> = (props) => {
     <div className="container">
      <div className="action_button">
       <NavLink to="/new" >
-        <Actionbutton isActive={currentTab(props.history,"/new")} text="New" />
+        <Actionbutton isActive={currentTab(props,"/new")} text="New" />
       </NavLink>
       
       <NavLink to="/top" >
-        <Actionbutton isActive={currentTab(props.history,"/top")} text="Past" />
+        <Actionbutton isActive={currentTab(props,"/top")} text="Past" />
         </NavLink>
 
       <NavLink to="/best" >
-        <Actionbutton isActive={currentTab(props.history,"/best")} text="Best" />
+        <Actionbutton isActive={currentTab(props,"/best")} text="Best" />
         </NavLink>
     </div>
     </div>

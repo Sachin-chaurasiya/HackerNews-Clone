@@ -1,28 +1,44 @@
+export type news={
+  id:number,
+  by:string,
+  descendants: number
+  score: number
+  time: number
+  title: string
+  type: string
+  url: string
+  kids?:number[]
+  text:string
+}
+
 export type match={
   match:{
     params:{
-      type:string
+      storytype:string
     }
   }
 }
 
 export interface AppState{
-  news:{}[]|undefined,
-  error:string|undefined,
-  isloading:boolean|undefined,
-  postVisible:number|undefined
+  stories:news[],
+  error:string,
+  isloading:boolean,
+  postVisible:number
 
 }
+
 export enum actionType{
-  SETNEWS="setNews",
-  SETERROR="setError",
-  RESETERROR="resetError",
-  SETLOADING="setLoading",
-  RESETLOADING="resetLoading",
-  SETVISIBLE="setVisible",
+  
+  SET_NEWS="setNews",
+  SET_ERROR="setError",
+  RESET_ERROR="resetError",
+  SET_LOADING="setLoading",
+  RESET_LOADING="resetLoading",
+  SET_VISIBLE="setVisible",
 }
+
 
 export interface Action{
   type:actionType,
-  payload?:{}[]
+  payload?:news[]
 }

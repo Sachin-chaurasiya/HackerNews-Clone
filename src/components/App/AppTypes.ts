@@ -21,7 +21,6 @@ export type Match = {
 
 export interface AppState {
   initialStories: News[];
-  remainingStories: News[];
   error: string;
   isloading: boolean;
   postVisible: number;
@@ -34,7 +33,7 @@ export enum actionType {
   SET_LOADING = "setLoading",
   RESET_LOADING = "resetLoading",
   SET_VISIBLE = "setVisible",
-  SET_REMAINNEWS = "setRemainNews",
+  RESET_VISIBLE = "resetVisible",
 }
 
 export interface Action {

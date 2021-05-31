@@ -20,13 +20,15 @@ const getStory = async (id: number): Promise<News> => {
 };
 
 const getStoryByType = async (
-  type: string
+  type: string,
+  start: number = 0,
+  end: number = 15
 ): Promise<{ news: News[]; TotalNumberOfStories: number }> => {
   try {
     const { data } = await axios.get<number[]>(
       `${BASE_URL}/${type}stories.json`
     );
-    const news = await Promise.all(data.slice(0, 15).map(getStory));
+    const news = await Promise.all(data.slice(start, end).map(getStory));
     return { news, TotalNumberOfStories: data.length };
   } catch (error) {
     if (isAxiosError(error)) {
@@ -35,19 +37,5 @@ const getStoryByType = async (
     return error;
   }
 };
-const getStoryByTypeInBackGround = async (type: string): Promise<News[]> => {
-  try {
-    const { data } = await axios.get<number[]>(
-      `${BASE_URL}/${type}stories.json`
-    );
-    const news = await Promise.all(data.slice(15, data.length).map(getStory));
-    return news;
-  } catch (error) {
-    if (isAxiosError(error)) {
-      return Promise.reject(error.response?.data.error);
-    }
-    return error;
-  }
-};
 
-export { getStory, getStoryByType, getStoryByTypeInBackGround };
+export { getStory, getStoryByType };

@@ -9,12 +9,6 @@ export const reducer = (state: AppState, action: Action): AppState => {
       } else {
         return state;
       }
-    case actionType.SET_REMAINNEWS:
-      if (typeof payload !== "undefined") {
-        return { ...state, remainingStories: payload };
-      } else {
-        return state;
-      }
 
     case actionType.SET_ERROR:
       return { ...state, error: "No data found" };
@@ -32,6 +26,11 @@ export const reducer = (state: AppState, action: Action): AppState => {
       return {
         ...state,
         postVisible: state.postVisible && state.postVisible + 15,
+      };
+    case actionType.RESET_VISIBLE:
+      return {
+        ...state,
+        postVisible: 15,
       };
 
     default:

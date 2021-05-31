@@ -1,9 +1,9 @@
 import React from "react"
 import "./Card.css"
 import {BsClock} from "react-icons/bs"
-import {news} from "../App/AppUtils"
+import {News} from "../App/AppTypes"
 
-const Card:React.FC<news> = ({title,text,url,time,kids}) => {
+const Card:React.FC<News> = ({title,text,url,time,kids}) => {
   return (
    <a href={url} style={{textDecoration:"none",color:"var(--gray-ft)"}} rel="noopener noreferrer" target="_blank">
     <div className="card" >

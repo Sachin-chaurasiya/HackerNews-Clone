@@ -1,25 +1,40 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { BASE_URL } from "./Constant";
-import { news } from "../components/App/AppUtils";
+import { News } from "../components/App/AppTypes";
 
-const getStory = async (id: number): Promise<news> => {
+// type predicate
+function isAxiosError(err: any): err is AxiosError {
+  return err.isAxiosError === true;
+}
+
+const getStory = async (id: number): Promise<News> => {
   try {
-    const single = await axios.get<news>(`${BASE_URL}/item/${id}.json`);
+    const single = await axios.get<News>(`${BASE_URL}/item/${id}.json`);
     return single.data;
-  } catch (error: unknown) {
-    return Promise.reject("No data Found for given id");
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return Promise.reject(error.response?.data.error);
+    }
+    return error;
   }
 };
 
-const getStoryByType = async (type: string): Promise<news[]> => {
+const getStoryByType = async (
+  type: string,
+  start: number = 0,
+  end: number = 5
+): Promise<{ news: News[]; TotalNumberOfStories: number }> => {
   try {
     const { data } = await axios.get<number[]>(
       `${BASE_URL}/${type}stories.json`
     );
-    const news = await Promise.all(data.map(getStory));
-    return news;
-  } catch (error: unknown) {
-    return Promise.reject("No data Found for given type");
+    const news = await Promise.all(data.slice(start, end).map(getStory));
+    return { news, TotalNumberOfStories: data.length };
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return Promise.reject(error.response?.data.error);
+    }
+    return error;
   }
 };
 

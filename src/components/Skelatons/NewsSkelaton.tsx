@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import Shimmer from './Shimmer'
-import Skeleton from './Skelatons'
+import Skeleton from './Skelaton'
 
 const NewsSkelaton:React.FC<ReactNode> = ()=> {
   const themeClass = 'light'

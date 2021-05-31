@@ -1,18 +1,18 @@
 import React from 'react'
-import {news} from "../App/AppUtils"
+import {News} from "../App/AppTypes"
 
 type loadmore={
-  isloading:boolean,
+
   callback:React.MouseEventHandler,
   postVisible:number,
-  stories:news[]
+  stories:News[]
 }
-const LoadMore:React.FC<loadmore> = ({isloading,callback,postVisible,stories}):React.ReactElement => {
+const LoadMore:React.FC<loadmore> = ({callback,postVisible,stories}):React.ReactElement => {
   return (
     <>
       {stories.length>0 &&
         <div className="container">
-         <button className="button" disabled={isloading?true:false} onClick={callback} style={{display:`${postVisible && postVisible>=500?"none":"block"}`}}>Load more</button>
+         <button className="button"  onClick={callback} style={{display:`${postVisible && postVisible>=500?"none":"block"}`}}>Load more</button>
         </div>
          }
     </>

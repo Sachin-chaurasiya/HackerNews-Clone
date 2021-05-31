@@ -74,7 +74,7 @@ const App:React.FC<Match> =(props)=>{
         {!isloading && 
          <Cardlist stories={initialStories}/>
          }
-         {start>=STORY_PERPAGE && <Cardlist stories={remainingStories.slice(STORY_PERPAGE,postVisible)}/>}
+         {start>=STORY_PERPAGE && !isloading && <Cardlist stories={remainingStories.slice(STORY_PERPAGE,postVisible)}/>}
         <Error message={error}/>
         {!isloading && !error && <div className="container">Page: {currentPage} / {Math.ceil(totalNumberOfStories/STORY_PERPAGE)}</div>}
         

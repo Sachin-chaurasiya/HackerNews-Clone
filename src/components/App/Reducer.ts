@@ -5,7 +5,13 @@ export const reducer = (state: AppState, action: Action): AppState => {
   switch (type) {
     case actionType.SET_NEWS:
       if (typeof payload !== "undefined") {
-        return { ...state, stories: payload };
+        return { ...state, initialStories: payload };
+      } else {
+        return state;
+      }
+    case actionType.SET_REMAINNEWS:
+      if (typeof payload !== "undefined") {
+        return { ...state, remainingStories: payload };
       } else {
         return state;
       }

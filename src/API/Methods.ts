@@ -19,17 +19,16 @@ const getStory = async (id: number): Promise<News> => {
   }
 };
 
+// refactor this code so it wont call the stories endpoint again and again
 const getStoryByType = async (
-  type: string,
-  start: number = 0,
-  end: number = 15
-): Promise<{ news: News[]; TotalNumberOfStories: number }> => {
+  type: string
+): Promise<{ data: number[]; TotalNumberOfStories: number }> => {
   try {
     const { data } = await axios.get<number[]>(
       `${BASE_URL}/${type}stories.json`
     );
-    const news = await Promise.all(data.slice(start, end).map(getStory));
-    return { news, TotalNumberOfStories: data.length };
+
+    return { data, TotalNumberOfStories: data.length };
   } catch (error) {
     if (isAxiosError(error)) {
       return Promise.reject(error.response?.data.error);
@@ -38,4 +37,19 @@ const getStoryByType = async (
   }
 };
 
-export { getStory, getStoryByType };
+const getStories = async (
+  data: number[],
+  start: number = 0,
+  end: number = 15
+): Promise<News[]> => {
+  try {
+    const news = await Promise.all(data.slice(start, end).map(getStory));
+    return news;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return Promise.reject(error.response?.data.error);
+    }
+    return error;
+  }
+};
+export { getStory, getStoryByType, getStories };

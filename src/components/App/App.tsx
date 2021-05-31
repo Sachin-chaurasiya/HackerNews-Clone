@@ -17,6 +17,7 @@ const initialState:AppState = {
 };
 
 const App:React.FC<match> =(props)=>{
+  
   const storyType:string=props.match.params.storytype;
   const [state, dispatch] = useReducer(reducer, initialState);
   const loadHandler:React.MouseEventHandler=()=>{
@@ -24,11 +25,17 @@ const App:React.FC<match> =(props)=>{
   }
   const {postVisible,isloading,stories,error}=state
   
+  
+  
   useEffect(() => {
+    
+    
+    
     dispatch({type:actionType.SET_LOADING})
 
-    getStoryByType(storyType,postVisible)
+    getStoryByType(storyType)
     .then((res:news[])=>{
+      
       dispatch({type:actionType.SET_NEWS,payload:res})
       dispatch({type:actionType.RESET_LOADING})
       dispatch({type:actionType.RESET_ERROR})
@@ -39,13 +46,14 @@ const App:React.FC<match> =(props)=>{
       dispatch({type:actionType.SET_ERROR})
     })
     
+    
 
-  }, [storyType,postVisible])
+  }, [storyType])
   
     return(
       <>
         <Skeleton isloading={isloading}/>
-        <Cardlist stories={stories} isloading={isloading}/> 
+        <Cardlist stories={stories.slice(0,postVisible)} isloading={isloading}/> 
         <Error message={error}/>
         <Loadmore isloading={isloading} callback={loadHandler} postVisible={postVisible} stories={stories} />
       </>

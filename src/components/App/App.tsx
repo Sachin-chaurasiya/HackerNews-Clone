@@ -1,4 +1,4 @@
-import React,{useEffect,useReducer,useState} from "react"
+import React,{useEffect,useReducer} from "react"
 import "./App.css"
 import Cardlist from "../CardList/Cardlist"
 import {getStoryByType,getStories} from "../../API/Methods"
@@ -8,46 +8,43 @@ import {Match,AppState,actionType,News} from "./AppTypes"
 import {reducer} from "./Reducer"
 import Loadmore from "../LoadMore/LoadMore"
 
-const STORY_PERPAGE=15
+export const STORY_PERPAGE=15
+
 const initialState:AppState = {
   initialStories: [],
   error:"",
   isloading:false,
   postVisible:STORY_PERPAGE,
-  
+  currentPage: 1,
+  start: 0,
+  stories:[],
+  StoryType:"new",
+  storyIds:[],
+  totalNumberOfStories:0
 
 };
 
 const App:React.FC<Match> =({match})=>{
   
-  // refator local state to useReducer state
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [StoryType,setStoryType]=useState<string>(match.params.storytype)
-  const [currentPage,setCurrentPage]=useState<number>(1)
-  const [start,setStart] =useState<number>(0)
-  const [totalNumberOfStories,setTotalNumberOfStories] =useState<number>(0)
-  const [stories,setStories]=useState<News[]>([])
-  const [storyIds,setStoryIds]=useState<number[]>([])
-  const {postVisible,isloading,initialStories,error}=state
+  const {postVisible,isloading,initialStories,error,currentPage,start,stories,totalNumberOfStories,storyIds,StoryType}=state
 
-  
   const loadHandler:React.MouseEventHandler=()=>{
-    setStart(prevState=>prevState+STORY_PERPAGE)
+    dispatch({type:actionType.SET_START})
     dispatch({type:actionType.SET_VISIBLE})
-    setCurrentPage(preState=>preState+1)
+    dispatch({type:actionType.SET_CURRENT_PAGE})
     window.scrollTo({
-      top: window.pageYOffset-468,
+      top: window.pageYOffset-500,
       behavior: "smooth"
     });
   }
   
   useEffect(()=>{
-    console.log("fetching ids");
     dispatch({type:actionType.SET_LOADING})
     getStoryByType(StoryType)
     .then((res:{data:number[],TotalNumberOfStories:number})=>{
-      setTotalNumberOfStories(res.TotalNumberOfStories)
-      setStoryIds(res.data) 
+      dispatch({type:actionType.SET_TOTAL_NUMBER_OF_STORIES,payload:{totalNumberOfStories:res.TotalNumberOfStories}})
+      dispatch({type:actionType.SET_STORY_IDS,payload:{storyIds:res.data}})
       dispatch({type:actionType.RESET_LOADING})
     })
     .catch(()=>{
@@ -59,15 +56,14 @@ const App:React.FC<Match> =({match})=>{
 
   useEffect(()=>{
     if (StoryType !== match.params.storytype) {
-     console.log("render when type changed");
-    setStoryType(match.params.storytype) 
-    setStart(0)
+    dispatch({type:actionType.SET_STORY_TYPE,payload:{storyType:match.params.storytype}})
+    dispatch({type:actionType.RESET_START})
     dispatch({type:actionType.RESET_VISIBLE})
-    setStories([])
-    setStoryIds([])
-    dispatch({type:actionType.SET_NEWS,payload:[]})
-    setTotalNumberOfStories(0)
-    setCurrentPage(1)
+    dispatch({type:actionType.RESET_STORIES})
+    dispatch({type:actionType.RESET_CURRENT_PAGE})
+    dispatch({type:actionType.SET_NEWS,payload:{initialstories:[]}})
+    dispatch({type:actionType.RESET_STORY_IDS})
+    dispatch({type:actionType.RESET_TOTAL_NUMBER_OF_STORIES})
   }
   },[StoryType,match.params.storytype])
   
@@ -76,7 +72,7 @@ const App:React.FC<Match> =({match})=>{
    dispatch({type:actionType.SET_LOADING})
    getStories(storyIds,start,postVisible)
    .then((res:News[])=>{
-    dispatch({type:actionType.SET_NEWS,payload:res})
+    dispatch({type:actionType.SET_NEWS,payload:{initialstories:res}})
       dispatch({type:actionType.RESET_LOADING})
       dispatch({type:actionType.RESET_ERROR})
    })
@@ -87,7 +83,7 @@ const App:React.FC<Match> =({match})=>{
   },[storyIds,start,postVisible])
 
   useEffect(()=>{
-   setStories(prevStories=>[...prevStories,...initialStories])
+   dispatch({type:actionType.SET_STORIES})
   },[initialStories])
 
     return(
@@ -101,7 +97,7 @@ const App:React.FC<Match> =({match})=>{
         <Error message={error}/>
         {!isloading && totalNumberOfStories>0 && !error && <div className="container">Page: {currentPage} / {Math.ceil(totalNumberOfStories/STORY_PERPAGE)}</div>}
         
-        {!isloading && <Loadmore callback={loadHandler} postVisible={postVisible} stories={stories} />}
+        {!isloading && <Loadmore callback={loadHandler} postVisible={postVisible} totalNumberOfStories={totalNumberOfStories} stories={stories} />}
       </>
     )
   

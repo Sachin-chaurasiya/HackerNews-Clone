@@ -5,14 +5,15 @@ type loadmore={
 
   callback:React.MouseEventHandler,
   postVisible:number,
-  stories:News[]
+  stories:News[],
+  totalNumberOfStories:number
 }
-const LoadMore:React.FC<loadmore> = ({callback,postVisible,stories}):React.ReactElement => {
+const LoadMore:React.FC<loadmore> = ({callback,postVisible,stories,totalNumberOfStories}):React.ReactElement => {
   return (
     <>
       {stories.length>0 &&
         <div className="container">
-         <button className="button"  onClick={callback} style={{display:`${postVisible && postVisible>=500?"none":"block"}`}}>Load more</button>
+         <button className="button"  onClick={callback} style={{display:`${postVisible && postVisible>=totalNumberOfStories?"none":"block"}`}}>Load more</button>
         </div>
          }
     </>

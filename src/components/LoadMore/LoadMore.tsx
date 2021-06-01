@@ -4,16 +4,16 @@ import {News} from "../App/AppTypes"
 type loadmore={
 
   callback:React.MouseEventHandler,
-  postVisible:number,
+  lastIndex:number,
   stories:News[],
   totalNumberOfStories:number
 }
-const LoadMore:React.FC<loadmore> = ({callback,postVisible,stories,totalNumberOfStories}):React.ReactElement => {
+const LoadMore:React.FC<loadmore> = ({callback,lastIndex,stories,totalNumberOfStories}):React.ReactElement => {
   return (
     <>
       {stories.length>0 &&
         <div className="container">
-         <button className="button"  onClick={callback} style={{display:`${postVisible && postVisible>=totalNumberOfStories?"none":"block"}`}}>Load more</button>
+         <button className="button"  onClick={callback} style={{display:`${lastIndex && lastIndex>=totalNumberOfStories?"none":"block"}`}}>Load more</button>
         </div>
          }
     </>

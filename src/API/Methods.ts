@@ -19,16 +19,13 @@ const getStory = async (id: number): Promise<News> => {
   }
 };
 
-// refactor this code so it wont call the stories endpoint again and again
-const getStoryByType = async (
-  type: string
-): Promise<{ data: number[]; TotalNumberOfStories: number }> => {
+const getStoryByType = async (type: string): Promise<number[]> => {
   try {
     const { data } = await axios.get<number[]>(
       `${BASE_URL}/${type}stories.json`
     );
 
-    return { data, TotalNumberOfStories: data.length };
+    return data;
   } catch (error) {
     if (isAxiosError(error)) {
       return Promise.reject(error.response?.data.error);

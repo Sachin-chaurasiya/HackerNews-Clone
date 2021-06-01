@@ -8,4 +8,5 @@
   padding: 1rem;
   border-radius: 50%;
   cursor: pointer;
+  box-shadow: -2px 0px 4px #888888;
 }

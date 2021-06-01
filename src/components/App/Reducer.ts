@@ -1,18 +1,13 @@
 import { AppState, actionType, Action } from "./AppTypes";
-import { STORY_PERPAGE } from "./App";
+import { initialState } from "./App";
+
 export const reducer = (state: AppState, action: Action): AppState => {
   const { type, payload } = action;
 
   switch (type) {
-    case actionType.SET_NEWS:
-      if (typeof payload?.initialstories !== "undefined") {
-        return { ...state, initialStories: payload.initialstories };
-      } else {
-        return state;
-      }
     case actionType.SET_STORY_TYPE:
       if (typeof payload?.storyType !== "undefined") {
-        return { ...state, StoryType: payload.storyType };
+        return { ...state, storyType: payload.storyType };
       } else {
         return state;
       }
@@ -23,19 +18,13 @@ export const reducer = (state: AppState, action: Action): AppState => {
       } else {
         return state;
       }
-    case actionType.RESET_STORY_IDS:
-      return { ...state, storyIds: [] };
 
-    case actionType.SET_TOTAL_NUMBER_OF_STORIES:
-      if (typeof payload?.totalNumberOfStories !== "undefined") {
-        return { ...state, totalNumberOfStories: payload.totalNumberOfStories };
+    case actionType.SET_STORIES:
+      if (typeof payload?.stories !== "undefined") {
+        return { ...state, stories: [...state.stories, ...payload.stories] };
       } else {
         return state;
       }
-
-    case actionType.RESET_TOTAL_NUMBER_OF_STORIES:
-      return { ...state, totalNumberOfStories: 0 };
-
     case actionType.SET_ERROR:
       return { ...state, error: "No data found" };
 
@@ -44,20 +33,6 @@ export const reducer = (state: AppState, action: Action): AppState => {
 
     case actionType.SET_CURRENT_PAGE:
       return { ...state, currentPage: state.currentPage + 1 };
-    case actionType.RESET_CURRENT_PAGE:
-      return { ...state, currentPage: 1 };
-
-    case actionType.SET_START:
-      return { ...state, start: state.start + STORY_PERPAGE };
-
-    case actionType.RESET_START:
-      return { ...state, start: 0 };
-
-    case actionType.SET_STORIES:
-      return { ...state, stories: [...state.stories, ...state.initialStories] };
-
-    case actionType.RESET_STORIES:
-      return { ...state, stories: [] };
 
     case actionType.SET_LOADING:
       return { ...state, isloading: true };
@@ -65,16 +40,8 @@ export const reducer = (state: AppState, action: Action): AppState => {
     case actionType.RESET_LOADING:
       return { ...state, isloading: false };
 
-    case actionType.SET_VISIBLE:
-      return {
-        ...state,
-        postVisible: state.postVisible && state.postVisible + STORY_PERPAGE,
-      };
-    case actionType.RESET_VISIBLE:
-      return {
-        ...state,
-        postVisible: STORY_PERPAGE,
-      };
+    case actionType.RESET_STATE:
+      return { ...initialState };
 
     default:
       return state;

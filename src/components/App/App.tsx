@@ -4,21 +4,12 @@ import Cardlist from "../CardList/Cardlist"
 import {getStoryByType,getStories} from "../../API/Methods"
 import Error from "../Error/Error";
 import Skeleton from "../Skelatons/Skeletons"
-import {Match,AppState,actionType,News} from "./AppTypes"
+import {Match,actionType,News} from "./AppTypes"
 import {reducer} from "./Reducer"
 import Loadmore from "../LoadMore/LoadMore"
+import { initialState, STORY_PERPAGE } from "./Constant";
 
-export const STORY_PERPAGE=15
 
-export const initialState:AppState = {
-  error:"",
-  isloading:false,
-  currentPage: 1,
-  stories:[],
-  storyType:"new",
-  storyIds:[],
-
-};
 
 const App:React.FC<Match> =({match})=>{
   const STORY_TYPE_FROM_PARAMS=match.params.storytype

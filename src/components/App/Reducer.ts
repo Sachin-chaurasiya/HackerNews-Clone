@@ -1,5 +1,5 @@
 import { AppState, actionType, Action } from "./AppTypes";
-import { initialState } from "./App";
+import { initialState } from "./Constant";
 
 export const reducer = (state: AppState, action: Action): AppState => {
   const { type, payload } = action;
